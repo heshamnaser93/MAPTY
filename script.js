@@ -78,7 +78,10 @@ class App {
     this._getPosition();
 
     //changing between running and cycling
-    this._toggleElevationField();
+    inputType.addEventListener('change', this._toggleElevationField);
+
+    //Clicking On Workout
+    containerWorkouts.addEventListener('click', this._moveToPopup);
 
     //Submiting Form
     form.addEventListener('submit', this._newWorkout.bind(this));
@@ -128,12 +131,8 @@ class App {
   }
 
   _toggleElevationField() {
-    inputType.addEventListener('change', function () {
-      inputElevation
-        .closest('.form__row')
-        .classList.toggle('form__row--hidden');
-      inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-    });
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
   }
 
   _newWorkout(e) {
@@ -268,6 +267,11 @@ class App {
     }
 
     form.insertAdjacentHTML('afterend', html);
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+    console.log(workoutEl);
   }
 }
 //////////////////////////////////////
