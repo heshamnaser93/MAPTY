@@ -22,7 +22,6 @@ class Workout {
 
   click() {
     this.clicks++;
-    console.log(this.clicks);
   }
 }
 
@@ -199,7 +198,6 @@ class App {
 
     // add a new object to workout array
     this.#workouts.push(workout);
-    console.log(this.#workouts);
 
     // render workout on map as a marker
     this._renderWorkoutMarker(workout);
@@ -236,7 +234,7 @@ class App {
   // Rendering Workout On List
   _renderWorkout(wk) {
     let html = `
-        <li class="workout ${wk.type}" data-id="${wk.id}">
+        <li class="workout workout--${wk.type}" data-id="${wk.id}">
           <h2 class="workout__title">${wk.description}</h2>
           <div class="workout__details">
             <span class="workout__icon">${
@@ -287,19 +285,17 @@ class App {
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
-    console.log(workoutEl);
 
     if (!workoutEl) return;
 
     const workout = this.#workouts.find(wk => wk.id === workoutEl.dataset.id);
-    console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
       pain: { duration: 1 },
     });
 
-    workout.click();
+    //workout.click();
   }
 
   _setLocalStorage() {
@@ -314,6 +310,11 @@ class App {
     this.#workouts = data;
 
     this.#workouts.forEach(wk => this._renderWorkout(wk));
+  }
+
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 //////////////////////////////////////
